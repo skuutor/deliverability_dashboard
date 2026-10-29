@@ -2,7 +2,7 @@
 
 **Paused as of:** Sept 7, 2026. Reason: focusing effort elsewhere for now; will resume if Apollo moves forward.
 
-**Where the files live:** `C:\Users\epich\deliverability_dashboard\` — includes `index.html`, `summary.js`, `detail.html`, `detail.js`, `checks.js`, `style.css`, `domains.json`, and `serve.ps1` (local server, see below).
+**Where the files live:** `C:\Users\epich\deliverability_dashboard\` on this Windows machine, and as of 2026-10-29 also at **https://github.com/skuutor/deliverability_dashboard** (private repo, full history pushed) — includes `index.html`, `summary.js`, `detail.html`, `detail.js`, `checks.js`, `style.css`, `domains.json`, and `serve.ps1` (local server, Windows-only — see below for the Mac equivalent).
 
 **Key reference docs, also in that folder:**
 - `domain-health-checker-spec.md` — the full functional spec, current as of the last edit
@@ -40,7 +40,9 @@ Everything below has been built AND manually verified running in the browser (no
 Cool/technical palette (light cool-gray background, near-black text, deep blue accent) rather than generic warm-SaaS defaults. Semantic status colors used consistently: green/amber/red plus a genuinely distinct slate gray for Inconclusive (not a fourth "bad" shade — it's a different category of answer). Real webfont via CDN (Google Fonts or similar) chosen deliberately — reasoning: the app already depends on Google's DoH API being reachable, so one more external request isn't a new category of fragility.
 
 ### Local dev setup
-No Node/Python on this machine. A local server is required because opening `index.html` directly (`file://`) blocks the `fetch()` call to `domains.json`. **To run: `powershell -ExecutionPolicy Bypass -File C:\Users\epich\deliverability_dashboard\serve.ps1`** (or `cd` into the folder, run `.\serve.ps1`), then open `http://localhost:8000/` in Chrome. Leave that PowerShell window open while testing; `Ctrl+C` to stop.
+No Node/Python on this Windows machine. A local server is required because opening `index.html` directly (`file://`) blocks the `fetch()` call to `domains.json`. **To run on Windows: `powershell -ExecutionPolicy Bypass -File C:\Users\epich\deliverability_dashboard\serve.ps1`** (or `cd` into the folder, run `.\serve.ps1`), then open `http://localhost:8000/` in Chrome. Leave that PowerShell window open while testing; `Ctrl+C` to stop.
+
+**On a Mac:** `serve.ps1` doesn't run there (PowerShell script). macOS ships Python 3 by default, so skip it entirely — `cd` into the folder and run `python3 -m http.server 8000`, then open `http://localhost:8000/` the same way. `Ctrl+C` to stop. No script needed; this is a one-line substitute, not a port of `serve.ps1`.
 
 ### Sample data
 `domains.json` has ~10 real domains (google.com, microsoft.com, github.com, stripe.com, hubspot.com, mailchimp.com, salesforce.com, example.com, example.net) plus **`dshfu24542.org`** — a deliberately unregistered domain included as a reliable "fully broken, 0/5" case, confirmed to return clean NXDOMAIN results rather than crashing.
@@ -71,7 +73,7 @@ These are strong "AI built something wrong, I caught it" stories — arguably mo
 ## Next steps when you resume
 
 1. **Re-verify everything still runs** — start with `serve.ps1`, confirm the grid loads clean (no console errors), spot-check a couple of domains against the bug-fix list above to confirm nothing regressed.
-2. **Decide on hosting** — this was flagged but never resolved. Currently the app only runs locally via the PowerShell server; there's no shareable link. GitHub Pages is a strong candidate (free, simple, matches the static-site architecture) if you want to send Apollo a live URL instead of walking someone through a local setup.
+2. **Decide on hosting** — still unresolved. The code now lives on GitHub (private repo, pushed 2026-10-29), which is a prerequisite for GitHub Pages but doesn't turn it on by itself — Pages still needs to be enabled in the repo settings, and the repo would need to go public (or use a paid plan) for Pages to serve it, since Pages doesn't serve private repos on the free tier. Currently the app still only runs locally (PowerShell on Windows, `python3 -m http.server` on Mac); there's still no shareable link.
 3. **Consider reading the actual code yourself** — you've verified behavior thoroughly but hadn't sat down to read `checks.js` line-by-line as of the pause. Worth doing at least once before an interview, so you can speak to implementation details directly, not just outcomes.
 4. **Prep the demo narrative** — a draft flow exists in `domain-health-checker-spec.md` under "Demo narrative." Worth rehearsing once hosting is sorted, hitting: the portfolio summary → grid → drill-in flow, the no-composite-score reasoning, and at least one of the four bugs above as a concrete "AI got this wrong, here's how I caught it" story.
 5. **Not yet started:** the earlier Regie.ai Codex-built domain/mailbox provisioning automation was mentioned as your other existing AI-building example for the Apollo application — worth deciding how these two examples complement each other in your actual application materials, separate from this project.

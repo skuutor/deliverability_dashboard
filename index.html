@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="view-transition" content="same-origin">
+<title>Domain Health Checker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+    <header class="page-header">
+      <h1>Domain Health Checker</h1>
+      <p class="subtitle">SPF, DKIM, DMARC, IP blocklist, and SURBL domain reputation across your domain portfolio.</p>
+    </header>
+
+    <p id="load-status">Loading domains.json and running checks…</p>
+
+    <section id="portfolio-summary" class="portfolio-summary" hidden>
+      <div id="summary-eyebrow" class="summary-eyebrow"></div>
+      <div id="summary-headline" class="summary-headline"></div>
+      <div id="summary-breakdown" class="summary-breakdown"></div>
+    </section>
+
+    <div id="grid-controls" class="grid-controls" hidden>
+      <label for="domain-filter">Filter</label>
+      <input type="text" id="domain-filter" placeholder="Filter by domain…">
+      <span id="active-filter" class="active-filter" hidden>
+        <span id="active-filter-text"></span>
+        <button type="button" id="clear-filter-btn" class="clear-filter-btn" aria-label="Clear filter">×</button>
+      </span>
+    </div>
+
+    <table id="grid" class="grid" hidden>
+      <thead>
+        <tr>
+          <th data-sort-key="domain" data-label="Domain">Domain</th>
+          <th data-sort-key="spf" data-label="SPF">SPF</th>
+          <th data-sort-key="dkim" data-label="DKIM">DKIM</th>
+          <th data-sort-key="dmarc" data-label="DMARC">DMARC</th>
+          <th data-sort-key="blocklist" data-label="IP Blocklist">IP Blocklist</th>
+          <th data-sort-key="surbl" data-label="SURBL Domain Blocklist">SURBL Domain Blocklist</th>
+          <th data-sort-key="passCount" data-label="Checks Passed">Checks Passed</th>
+        </tr>
+      </thead>
+      <tbody id="grid-body"></tbody>
+    </table>
+
+    <div class="grid-legend">
+      <span class="grid-legend-item"><span class="legend-swatch legend-swatch-pass"></span>Pass</span>
+      <span class="grid-legend-item"><span class="legend-swatch legend-swatch-warning"></span>Warning</span>
+      <span class="grid-legend-item"><span class="legend-swatch legend-swatch-fail"></span>Fail</span>
+      <span class="grid-legend-item"><span class="legend-swatch legend-swatch-inconclusive"></span>Inconclusive</span>
+    </div>
+
+    <footer class="page-footer">
+      <p>DNS lookups performed client-side via Google Public DNS-over-HTTPS. The percentage next to each pass count is a direct restatement of that count, not a separately-weighted score — see each domain's detail page for what was actually checked.</p>
+    </footer>
+  </div>
+
+  <script src="checks.js"></script>
+  <script src="summary.js"></script>
+</body>
+</html>

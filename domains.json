@@ -1,0 +1,14 @@
+{
+  "domains": [
+    { "domain": "google.com" },
+    { "domain": "microsoft.com" },
+    { "domain": "github.com" },
+    { "domain": "stripe.com" },
+    { "domain": "hubspot.com" },
+    { "domain": "mailchimp.com" },
+    { "domain": "salesforce.com" },
+    { "domain": "example.com" },
+    { "domain": "example.net" },
+    { "domain": "dshfu24542.org" }
+  ]
+}
